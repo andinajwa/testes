@@ -1,0 +1,5 @@
+# Ignore vendor folder (Composer dependencies)
+/vendor/
+
+# Ignore credentials and sensitive files
+Credentials.json
