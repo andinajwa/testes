@@ -1,0 +1,43 @@
+name: PHP 8.0 CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - master  # Atau bisa menggunakan main jika branch utama Anda bernama main
+  pull_request:
+    branches:
+      - master  # Atau main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # Set up PHP 8.0
+    - name: Set up PHP 8.0
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.0'
+
+    # Install Composer
+    - name: Install Composer
+      run: curl -sS https://getcomposer.org/installer | php
+
+    # Install dependencies using Composer
+    - name: Install dependencies
+      run: |
+        php composer.phar install --no-interaction --prefer-dist --optimize-autoloader
+
+    # Run PHPUnit tests (Optional)
+    - name: Run tests with PHPUnit
+      run: |
+        ./vendor/bin/phpunit --configuration phpunit.xml  # Ganti jika file konfigurasi PHPUnit Anda berbeda
+
+    # Deploy to server (Contoh)
+    - name: Deploy to server
+      run: |
+        echo "Deploying application"
+        # Tambahkan skrip deploy Anda di sini, misalnya menggunakan SSH atau FTP
